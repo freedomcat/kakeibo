@@ -18,16 +18,18 @@ kakeibo
 
 設定
 ----
-### 費目設定ファイル
-*./conf\[/user\]/himoku.csv*
+### 費目設定ファイル (*./conf\[/user\]/himoku.csv*)
+
 columns= id,Name,HimokuGroupid
 
+col | desc |
 --- |--- | 
 id |  一意のキー.数字. | 
 Name | 費目名.残額メモではタグと呼ばれるもの. | 
 HimokuGroupid | 費目の対応する費目グループid.1-4までのいずれかの数字. | 
 
 #### 費目グループ
+
 費目グループid | 名前 | 
 --- |--- | 
 1 | 収入 | 
@@ -37,23 +39,23 @@ HimokuGroupid | 費目の対応する費目グループid.1-4までのいずれ�
 
 収入-税金他が可処分所得.
 
-### 予算設定ファイル
-*./conf\[/user\]/yosanYYYY.csv*
+### 予算設定ファイル(*./conf\[/user\]/yosan\[YYYY\].csv*)
+
 columns = Himokuid,Yosan
 
-
+Col | Desc |
 --- |--- | 
 Himokuid | 費目id | 
 Yosan | 費目の一ヶ月の予算 | 
 
 * 予算は費目に対する通年予算を12で割った金額を一ヶ月予算とする.
 
-家計簿DBの作成 
+家計簿DBの作成 build.sh (*./data\[/user\]/YYYYkakeibo.sqlite3*)
 ----
-*./data\[/user\]/YYYYkakeibo.sqlite3*
+
 家計簿DBは./data\[/user\]に"YYYYkakeibo.sqlite3"ファイルとして作成される.
 
-    "Usage: ./install.sh -y YYYY \[-k 前年度繰越金\] \[-u user\[-h\] \[-b\]\]"
+    "Usage: ./build.sh -y YYYY \[-k 前年度繰越金\] \[-u user\[-h\] \[-b\]\]"
 
 option | arguments | desc |
 ---  | ---  | ---  | 
@@ -63,12 +65,15 @@ option | arguments | desc |
 -h | フラグ | -u、-hがある場合、conf/user/配下の費目設定ファイルを読み込む default conf/himoku.csv | 
 -b | フラグ | -u、-bがある場合、conf/user/配下の予算設定ファイルを読み込む default conf/yosan.csv | 
 
-データインポート
+データインポート import.sh
 ----
+
 ### インポート元データ準備
+
 残額メモのエクスポートデータのうち、zanmemo.dat2をdata\[/user\]ディレクトリに入れる.
 
 ### インポート
+
 import.shを実行する.データのインポートと繰越金計算を行っている.
 -yオプション省略時は当年家計簿で処理を行う.
 
@@ -85,43 +90,44 @@ option | arguments | desc |
 
 インポートされたデータは、当座テーブルに格納される。
 
-    SELECT * FROM Touza;
+    sqlite3> SELECT * FROM Touza;
     id,Date,Desc,Amount,Himoku
 
-id | プライマリキー | 
+Col | Desc | 
 ---  | ---  | 
+id | プライマリキー | 
 Date | YYYY-MM-DD形式 sqlite3の日付形式で検索可能 | 
 Desc | 摘要.残額メモのタイトル | 
 Amount | 金額.収入はマイナス、支出は自然数 | 
 Himoku | 費目名.残額メモのタグ | 
 
-ログイン
+ログイン login.sh
 ----
 
 login.shを実行する.-yオプション省略時は当年家計簿にログインする.
 
-    ./login.sh \[-y YYYY\] \[-u user\]
+    > ./login.sh \[-y YYYY\] \[-u user\]
 
 
 ### 使用例
 
-    sh ./build.sh -y 2013 -u shino -h -b
-    sh ./import.sh -y 2013 -u shino
-    sh ./login.sh -y 2013 -u shino
+    > sh ./build.sh -y 2013 -u shino -h -b
+    > sh ./import.sh -y 2013 -u shino
+    > sh ./login.sh -y 2013 -u shino
 
 独自のmyデータとzanmemoデータがある
 (あらかじめ独自データインポートのsql/import.my.sqlを作成する)
 
-    sh ./build.sh -y 2012 -u shino -h
-    sh ./import.sh -y 2012 -u shino -i my
-    sh ./import.sh -y 2012 -u shino -j
-    sh ./login.sh -y 2012 -u shino
+    > sh ./build.sh -y 2012 -u shino -h
+    > sh ./import.sh -y 2012 -u shino -i my
+    > sh ./import.sh -y 2012 -u shino -j
+    > sh ./login.sh -y 2012 -u shino
 
 集計参照
 ----
 ### 費目集計(HimokuView)
 
-    SELECT * FROM HimokuView;
+    slite3> SELECT * FROM HimokuView;
     ViewType,id,Name,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
 
 Col | Desc | 
@@ -134,7 +140,7 @@ Jan-Dec | 1月から12月の費目ごとの集計金額 |
 
 ### 費目別予算残額集計(予算を立てた人)(Zangaku)
 
-    SELECT * FROM Zangaku;
+    sqlite3> SELECT * FROM Zangaku;
     ViewType,id,Name,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
     
 Col | Desc | 
@@ -147,14 +153,14 @@ Jan-Dec | 1月から12月の費目ごとの予算対する残額金額.残額が
 
 *応用 特定月の費目と予算に対する赤字/黒字を知りたい*(1月の場合)
 
-       SELECT h.name AS himoku,h.Jan AS Jan,z.Jan AS zangaku
-       FROM HimokuView AS h,Zangaku AS z
-       WHERE h.id=z.id;
-
-       himoku,Jan,zangaku
+    sqlite3> SELECT h.name AS himoku,h.Jan AS Jan,z.Jan AS zangaku
+    sqlite3> FROM HimokuView AS h,Zangaku AS z
+    sqlite3> WHERE h.id=z.id;
+    himoku,Jan,zangaku
 
 ### 繰越金集計(HimokuGroupView)
-    SELECT * FROM HimokuGroupView;
+
+    sqlite3> SELECT * FROM HimokuGroupView;
     ViewType,id,Name,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
 
 Col | Desc | 
@@ -165,25 +171,29 @@ Name | 費目グループ名 |
 Total | 費目グループ別年間合計 | 
 Jan-Dec | 1月から12月の費目グループ別集計金額.前月繰越金は、前月の"前月繰越金+収入-(純生活費-税金他-預貯金)" | 
 
-繰越金集計の*翌月の前月繰越金*が、実際の*当月の赤字/黒字*を示している.
+繰越金集計の *翌月の前月繰越金* が、実際の *当月の赤字/黒字* を示している.
 
 *応用 費目集計と繰越金集計を一気に知りたい.*
 
-    SELECT * FROM HimokuView 
-    UNION
-    SELECT * FROM HimokuGroupView 
-    ORDER BY ViewType,id;
+    sqlite3> SELECT * FROM HimokuView 
+    sqlite3> UNION
+    sqlite3> SELECT * FROM HimokuGroupView 
+    sqlite3> ORDER BY ViewType,id;
 
 ### 決算(HimokuKessan / Kessan)
 
 費目別決算と収入、税金他など費目グループの決算が取得できる.
 
 * 費目別決算
-    SELECT * FROM HimokuKessan;
+
+    sqlite3> SELECT * FROM HimokuKessan;
+
 * 決算
-    SELECT * FROM Kessan;
+
+    sqlite3> SELECT * FROM Kessan;
 
 項目は共通
+
     Name,Total,FiscalYear,FirstFiscal,SecondFiscal,JanMar,AprJun,JulSep,OctDec 
 
 Col | Desc | 
@@ -198,9 +208,10 @@ JulSep | 四半期決算(7-9月) |
 OctDec | 四半期決算(10-12月) | 
 
 ### 次年度繰越金取得
+
 次年度繰越金を取得する.
 
-    SELECT NextKurikoshi FROM Kakeibo;
+    sqlite3> SELECT NextKurikoshi FROM Kakeibo;
 
 Col  |  Desc  | 
 ---  | ---  | 
