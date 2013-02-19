@@ -18,7 +18,7 @@ kakeibo
 
 設定
 ----
-### 費目設定ファイル (*./conf\[/user\]/himoku.csv*)
+### 費目設定ファイル conf\[/user\]/himoku.csv
 
 columns= id,Name,HimokuGroupid
 
@@ -39,7 +39,7 @@ HimokuGroupid | 費目の対応する費目グループid.1-4までのいずれ�
 
 収入-税金他が可処分所得.
 
-### 予算設定ファイル(*./conf\[/user\]/yosan\[YYYY\].csv*)
+### 予算設定ファイル ./conf\[/user\]/yosan\[YYYY\].csv
 
 columns = Himokuid,Yosan
 
@@ -50,8 +50,10 @@ Yosan | 費目の一ヶ月の予算 |
 
 * 予算は費目に対する通年予算を12で割った金額を一ヶ月予算とする.
 
-家計簿DBの作成 build.sh (*./data\[/user\]/YYYYkakeibo.sqlite3*)
+家計簿DBの作成 build.sh
 ----
+
+data\[/user\]/YYYYkakeibo.sqlite3
 
 家計簿DBは./data\[/user\]に"YYYYkakeibo.sqlite3"ファイルとして作成される.
 
@@ -111,17 +113,17 @@ login.shを実行する.-yオプション省略時は当年家計簿にログイ
 
 ### 使用例
 
-    > sh ./build.sh -y 2013 -u shino -h -b
-    > sh ./import.sh -y 2013 -u shino
-    > sh ./login.sh -y 2013 -u shino
+    > ./build.sh -y 2013 -u shino -h -b
+    > ./import.sh -y 2013 -u shino
+    > ./login.sh -y 2013 -u shino
 
 独自のmyデータとzanmemoデータがある
 (あらかじめ独自データインポートのsql/import.my.sqlを作成する)
 
-    > sh ./build.sh -y 2012 -u shino -h
-    > sh ./import.sh -y 2012 -u shino -i my
-    > sh ./import.sh -y 2012 -u shino -j
-    > sh ./login.sh -y 2012 -u shino
+    > ./build.sh -y 2012 -u shino -h
+    > ./import.sh -y 2012 -u shino -i my
+    > ./import.sh -y 2012 -u shino -j
+    > ./login.sh -y 2012 -u shino
 
 集計参照
 ----
@@ -184,11 +186,11 @@ Jan-Dec | 1月から12月の費目グループ別集計金額.前月繰越金は
 
 費目別決算と収入、税金他など費目グループの決算が取得できる.
 
-* 費目別決算
+費目別決算
 
     sqlite3> SELECT * FROM HimokuKessan;
 
-* 決算
+決算
 
     sqlite3> SELECT * FROM Kessan;
 
