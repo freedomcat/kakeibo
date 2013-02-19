@@ -1,0 +1,13 @@
+CREATE TABLE Month (mid INTEGER PRIMARY KEY AUTOINCREMENT,Date TEXT,Name TEXT);
+INSERT INTO Month(Date,Name) VALUES("01","Jan");
+INSERT INTO Month(Date,Name) VALUES("02","Feb");
+INSERT INTO Month(Date,Name) VALUES("03","Mar");
+INSERT INTO Month(Date,Name) VALUES("04","Apr");
+INSERT INTO Month(Date,Name) VALUES("05","May");
+INSERT INTO Month(Date,Name) VALUES("06","Jun");
+INSERT INTO Month(Date,Name) VALUES("07","Jul");
+INSERT INTO Month(Date,Name) VALUES("08","Aug");
+INSERT INTO Month(Date,Name) VALUES("09","Sep");
+INSERT INTO Month(Date,Name) VALUES("10","Act");
+INSERT INTO Month(Date,Name) VALUES("11","Nov");
+INSERT INTO Month(Date,Name) VALUES("12","Dec");
