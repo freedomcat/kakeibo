@@ -1,8 +1,8 @@
 #!/bin/sh
-# kakeibo install.sh
+# kakeibo build.sh
 # Author	:shino@freedomcat.com
 # Date		:2013/02/09
-# License	:CC BY-NC
+# License	:CC BY-NC-SA
 CMDNAME=$0
 while getopts y:u:k:hb OPT
 do

@@ -1,8 +1,8 @@
 #!/bin/sh
-# kakeibo update.sh
+# kakeibo import.sh
 # Author	:shino@freedomcat.com
 # Date		:2013/02/09
-# License	:CC BY-NC
+# License	:CC BY-NC-SA
 CMDNAME=$0
 usage="Usage: ${CMDNAME} [-y YYYY][-u user][-i importtype][-j]";
 while getopts :y:u:i:j OPT
