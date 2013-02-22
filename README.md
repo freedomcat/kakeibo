@@ -169,12 +169,10 @@ Name | 費目名 |
 Total | 費目別年間予算残額合計 | 
 Jan-Dec | 1月から12月の費目ごとの予算対する残額金額.残額が予算超過（赤字)はマイナス.  繰越タイプが収入(1)の費目は予算に対する不足金額がマイナス.   | 
 
-*応用 特定月の費目と予算に対する赤字/黒字を知りたい*(1月の場合)
+*応用 費目と残額を一度に知りたい*
 
-    sqlite3> SELECT h.name AS himoku,h.Jan AS Jan,z.Jan AS zangaku
-    sqlite3> FROM HimokuView AS h,Zangaku AS z
-    sqlite3> WHERE h.id=z.id;
-    himoku,Jan,zangaku
+    sqlite3 SELECT * FROM HimokuView UNION SELECT * FROM Zangaku OREDER BY id,ViewType;
+    ViewType,id,Name,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
 
 ### 繰越金集計(HimokuGroupView)
 
@@ -216,6 +214,8 @@ Jan-Dec | 1月から12月の費目分類別集計金額.前月繰越金は、前
 
 Col | Desc | 
 ---  | ---  | 
+ViewType | HK=費目決算 K=決算 |
+id | 費目idまた費目分類id |
 Name | 費目名または費目分類名（収入、税金他、純生活費、預貯金) | 
 FiscalYear | 12ヶ月決算(1-12月) | 
 FirstFiscal | 上半期決算(1-6月) | 
