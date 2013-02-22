@@ -2,15 +2,17 @@ kakeibo
 ====
 これは何？
 ----
-家計簿集計のsqlite3 DBを作成/繰越金計算
+家計簿集計sqlite3
 
-* 一年分の家計簿データの集計を行う
-+ 費目別/月別集計(HimokuView)
-+ 費目別予算に対する残高集計(Zangaku)
-+ 費目集計決算集計(HimokuKessan)
-+ 繰越集計(HimokuGroupView)
-+ 決算集計(Kessan)
+* 一年分の家計簿データの集計を行い、各種集計を参照できる
+* 元データは手元にあることする(日付,摘要,金額,費目)
 * データは全インポートのみ。差分インポートはなし。複数のデータ元のインポートは結合インポートとして扱われる
+
+### 集計参照
++ 費目別/月別集計(HimokuView) - 費目ごとの月合計
++ 残高集計(Zangaku) - 費目別予算に対する残高 -は予算超過金額
++ 繰越集計(HimokuGroupView) - 当月の繰越金は、翌月の前月繰越金に表示.+ならば黒字、-は赤字
++ 決算(Kessan)/費目決算(HimokuKessan)
 
 ### なんちゃってER図
 
@@ -107,7 +109,7 @@ option | arguments | desc |
 
 Col | Desc | 
 ---  | ---  | 
-id | プライマリキー | 
+id | プライマリキー(自動付与) | 
 Date | YYYY-MM-DD形式 sqlite3の日付形式で検索可能 | 
 Desc | 摘要.残額メモのタイトル | 
 Amount | 金額.収入はマイナス、支出は自然数 | 
@@ -122,6 +124,9 @@ login.shを実行する.-yオプション省略時は当年家計簿にログイ
 
 ### コマンド使用例
 
+2013年、userはshino、あらかじめconf/shino/himoku.csvとconf/shino/yosan2013.csvを作成しておく.
+データはdata/shino/zanmemo.dat2を入れておく.
+
     > ./build.sh -y 2013 -u shino -h -b
     > ./import.sh -y 2013 -u shino
     > ./login.sh -y 2013 -u shino
@@ -133,6 +138,8 @@ login.shを実行する.-yオプション省略時は当年家計簿にログイ
     > ./import.sh -y 2012 -u shino -i my
     > ./import.sh -y 2012 -u shino -j
     > ./login.sh -y 2012 -u shino
+
+二度目移行は、import.shとlogin.shを同様に繰り返す.
 
 sqlite3 集計参照
 ----
@@ -233,3 +240,4 @@ NextKurikoshi  |  次年度繰越金  |
 
 CC BY-NC-SA
 
+Author:shino@freedomcat.com
