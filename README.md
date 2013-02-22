@@ -29,11 +29,11 @@ col | desc |
 --- |--- | 
 id |  一意のキー.数字. | 
 Name | 費目名.残額メモではタグと呼ばれるもの. | 
-HimokuGroupid | 費目の対応する費目グループid.1-4までのいずれかの数字. | 
+HimokuGroupid | 費目の対応する費目分類id.1-4までのいずれかの数字. | 
 
-#### 費目グループ
+#### 費目分類
 
-費目グループid | 名前 | 
+費目分類id | 名前 | 
 --- |--- | 
 1 | 収入 | 
 2 | 税金他 | 
@@ -63,7 +63,7 @@ Yosan | 費目の一ヶ月の予算 |
 
 data\[/user\]/YYYYkakeibo.sqlite3
 
-    "Usage: ./build.sh -y YYYY \[-k 前年度繰越金\] \[-u user\[-h\] \[-b\]\]"
+    "Usage: .gbuild.sh -y YYYY [-k 前年度繰越金] [-u user[-h] [-b]]"
 
 option | arguments | desc |
 ---  | ---  | ---  | 
@@ -89,7 +89,7 @@ option | arguments | desc |
 
 import.shを実行する.
 
-    "Usage: ./import.sh [-y YYYY\] \[-u user\] \[-i importtype\] \[-j\]
+    "Usage: ./import.sh [-y YYYY] [-u user] [-i importtype] [-j]
 
 option | arguments | desc |
 ---  | ---  | ---  | 
@@ -117,7 +117,7 @@ Himoku | 費目名.残額メモのタグ |
 
 login.shを実行する.-yオプション省略時は当年家計簿にログインする.
 
-    > ./login.sh \[-y YYYY\] \[-u user\]
+    > ./login.sh [-y YYYY] [-u user]
 
 
 ### コマンド使用例
@@ -177,10 +177,10 @@ Jan-Dec | 1月から12月の費目ごとの予算対する残額金額.残額が
 Col | Desc | 
 ---  | ---  | 
 ViewType | HGV | 
-id | 費目グループid | 
-Name | 費目グループ名 | 
-Total | 費目グループ別年間合計 | 
-Jan-Dec | 1月から12月の費目グループ別集計金額.前月繰越金は、前月の"前月繰越金+収入-(純生活費-税金他-預貯金)" | 
+id | 費目分類id | 
+Name | 費目分類名 | 
+Total | 費目分類別年間合計 | 
+Jan-Dec | 1月から12月の費目分類別集計金額.前月繰越金は、前月の"前月繰越金+収入-(純生活費-税金他-預貯金)" | 
 
 繰越金集計の *翌月の前月繰越金* が、実際の *当月の赤字/黒字* を示している.
 
@@ -193,7 +193,7 @@ Jan-Dec | 1月から12月の費目グループ別集計金額.前月繰越金は
 
 ### 決算(HimokuKessan / Kessan)
 
-費目別決算と収入、税金他など費目グループの決算が取得できる.
+費目別決算と収入、税金他など費目分類の決算が取得できる.
 
 費目別決算
 
@@ -209,7 +209,7 @@ Jan-Dec | 1月から12月の費目グループ別集計金額.前月繰越金は
 
 Col | Desc | 
 ---  | ---  | 
-Name | 費目名または費目グループ名（収入、税金他、純生活費、預貯金) | 
+Name | 費目名または費目分類名（収入、税金他、純生活費、預貯金) | 
 FiscalYear | 12ヶ月決算(1-12月) | 
 FirstFiscal | 上半期決算(1-6月) | 
 SecondFiscal | 下半期決算(7-12月) | 
