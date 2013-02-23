@@ -1,4 +1,5 @@
 conf/*/
 data/*/
+sql/query/shokuhi/
 create.sh
 imports.sh
