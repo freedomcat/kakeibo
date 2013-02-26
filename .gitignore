@@ -1,6 +1,6 @@
 conf/*/
 data/*/
+report/*/
 sql/query/shokuhi/
-wiki/*/
 create.sh
 imports.sh
