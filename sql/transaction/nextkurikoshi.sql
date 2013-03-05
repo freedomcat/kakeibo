@@ -10,4 +10,4 @@ UPDATE Kurikoshi SET Amount = (SELECT SUM(HK.Amount) FROM (SELECT * FROM Kurikos
 UPDATE Kurikoshi SET Amount = (SELECT SUM(HK.Amount) FROM (SELECT * FROM Kurikoshi AS P WHERE P.mid=9 UNION SELECT * FROM HimokuGroupTotal AS H WHERE H.mid=9) AS HK) WHERE Kurikoshi.mid= 10; 
 UPDATE Kurikoshi SET Amount = (SELECT SUM(HK.Amount) FROM (SELECT * FROM Kurikoshi AS P WHERE P.mid=10 UNION SELECT * FROM HimokuGroupTotal AS H WHERE H.mid=10) AS HK) WHERE Kurikoshi.mid= 11; 
 UPDATE Kurikoshi SET Amount = (SELECT SUM(HK.Amount) FROM (SELECT * FROM Kurikoshi AS P WHERE P.mid=11 UNION SELECT * FROM HimokuGroupTotal AS H WHERE H.mid=11) AS HK) WHERE Kurikoshi.mid= 12; 
-UPDATE Kakeibo SET NextKurikoshi = (SELECT SUM(HK.Amount) FROM (SELECT * FROM Kurikoshi AS P WHERE P.mid=12 UNION SELECT * FROM HimokuGroupTotal AS H WHERE H.mid=12) AS HK);
+UPDATE Kakeibo SET NextKurikoshi = 0-(SELECT SUM(HK.Amount) FROM (SELECT * FROM Kurikoshi AS P WHERE P.mid=12 UNION SELECT * FROM HimokuGroupTotal AS H WHERE H.mid=12) AS HK);
